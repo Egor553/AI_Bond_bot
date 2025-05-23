@@ -3,494 +3,407 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI_Bond_bot</title>
+    <title>ShadowPulse Bot</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(to bottom, #4B0082, #2A0033);
-            color: #FFFFFF;
+            background: radial-gradient(circle, #0a1322, #1a2a44);
+            color: #e0f0ff;
+            font-family: 'Orbitron', 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
+            align-items: center;
             height: 100vh;
-            overflow: hidden;
+            overflow-y: auto;
+            animation: holographicPulse 3s infinite;
+        }
+        @keyframes holographicPulse {
+            0% { filter: hue-rotate(0deg) brightness(1); }
+            50% { filter: hue-rotate(180deg) brightness(1.1); }
+            100% { filter: hue-rotate(360deg) brightness(1); }
+        }
+        .container {
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            animation: slideInHolo 1s ease-out;
+        }
+        @keyframes slideInHolo {
+            from { transform: translateY(50px) scale(0.9); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
         }
         .header {
-            background-color: #1C0022;
-            padding: 15px;
-            text-align: center;
-            font-size: 28px;
-            font-weight: bold;
-            position: relative;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-            border-bottom: 2px solid #FFD700;
-        }
-        .header::before {
-            content: "007";
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 20px;
-            color: #FFD700;
-            font-family: 'Courier New', Courier, monospace;
-        }
-        .header span {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 16px;
-            color: #C0C0C0;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        .header span:hover {
-            color: #FFD700;
-        }
-        .nav {
             display: flex;
-            justify-content: space-around;
-            background-color: #2A0033;
-            padding: 15px;
-            border-bottom: 1px solid #FFD700;
-            flex-wrap: wrap;
-            gap: 10px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background: rgba(26, 42, 68, 0.9);
+            border: 3px solid #00ffcc;
+            border-radius: 15px 15px 0 0;
+            box-shadow: 0 0 20px #00ffcc;
+            backdrop-filter: blur(5px);
+            transition: all 0.4s ease;
         }
-        .nav button {
-            background: linear-gradient(45deg, #FF69B4, #C71585);
-            border: 1px solid #FFD700;
-            color: white;
-            padding: 12px 25px;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 8px;
-            transition: transform 0.2s, box-shadow 0.3s;
-            flex: 1;
-            max-width: 150px;
-            text-align: center;
+        .header:hover {
+            background: rgba(40, 60, 90, 0.9);
+            transform: scale(1.03);
         }
-        .nav button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 10px #FFD700;
+        .logo {
+            font-size: 2em;
+            color: #00ffcc;
+            text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ff99;
+            animation: neonBlink 1.5s infinite;
         }
-        .nav button.active {
-            background: linear-gradient(45deg, #C71585, #FF69B4);
-            box-shadow: 0 0 15px #FFD700;
+        @keyframes neonBlink {
+            0% { text-shadow: 0 0 10px #00ffcc; }
+            50% { text-shadow: 0 0 20px #00ff99, 0 0 30px #00ffcc; }
+            100% { text-shadow: 0 0 10px #00ffcc; }
+        }
+        .agent {
+            font-size: 1em;
+            color: #fff;
+            animation: radarSweep 2s infinite linear;
+        }
+        @keyframes radarSweep {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         .content {
-            flex: 1;
+            background: rgba(10, 19, 34, 0.9);
+            border: 3px solid #00ffcc;
+            border-top: none;
+            border-radius: 0 0 15px 15px;
             padding: 20px;
-            overflow-y: auto;
+            animation: holoReveal 0.8s ease-in-out;
         }
-        .team-member, .wallet-section {
-            background-color: #2A0033;
+        @keyframes holoReveal {
+            from { opacity: 0; transform: scale(0.95) translateZ(-20px); }
+            to { opacity: 1; transform: scale(1) translateZ(0); }
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .button {
+            background: linear-gradient(45deg, #00ffcc, #00cc99);
+            color: #0a1322;
             padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            border: 1px solid #FFD700;
-            transition: transform 0.3s;
-        }
-        .team-member:hover, .wallet-section:hover {
-            transform: translateY(-3px);
-        }
-        .team-member img, .wallet-section img {
-            width: 40px;
-            height: 40px;
-            margin-right: 15px;
-            border-radius: 50%;
-            border: 2px solid #FFD700;
-        }
-        .team-member p, .wallet-section p {
-            margin: 0;
-            font-size: 14px;
-        }
-        .referral, .wallet-form {
-            background-color: #2A0033;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            border: 1px solid #FFD700;
-        }
-        .referral p, .wallet-form p {
-            margin: 5px 0;
-        }
-        .mission, .connect-wallet {
-            background-color: #FFD700;
-            color: #2A0033;
-            padding: 10px;
-            border-radius: 5px;
-            text-align: center;
-            margin-top: 10px;
+            border-radius: 10px;
             cursor: pointer;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
             font-weight: bold;
-            transition: background-color 0.3s;
+            box-shadow: 0 0 10px #00ffcc;
         }
-        .mission:hover, .connect-wallet:hover {
-            background-color: #C0C0C0;
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
         }
-        .wallet-form input {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border: 1px solid #FFD700;
-            border-radius: 5px;
-            background-color: #1C0022;
-            color: #FFFFFF;
+        .button:hover::before {
+            width: 200px;
+            height: 200px;
         }
-        .trade-signal {
-            background-color: #2A0033;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 5px;
-            border: 1px solid #FFD700;
+        .button:hover {
+            background: linear-gradient(45deg, #00cc99, #009966);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 0 20px #00ffcc;
         }
-        .footer {
+        .section {
+            background: rgba(26, 42, 68, 0.7);
+            border: 2px solid #00ffcc;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: left;
+            animation: pulseSection 1.2s infinite;
+        }
+        @keyframes pulseSection {
+            0% { box-shadow: 0 0 5px #00ffcc; }
+            50% { box-shadow: 0 0 15px #00ff99; }
+            100% { box-shadow: 0 0 5px #00ffcc; }
+        }
+        .stats-list, .signals-list, .missions-list, .chat-messages {
+            padding-left: 15px;
+        }
+        .stat-item, .signal-item, .mission-item, .chat-message {
             display: flex;
-            justify-content: space-around;
-            background-color: #1C0022;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            border-top: 1px solid #FFD700;
-            flex-wrap: wrap;
-            gap: 5px;
+            justify-content: space-between;
+            margin: 10px 0;
+            animation: slideInMessage 0.5s ease-out;
         }
-        .footer button {
-            background: none;
-            border: none;
-            color: #FFFFFF;
-            font-size: 14px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: color 0.3s;
-            flex: 1;
-            max-width: 70px;
-            padding: 5px;
+        @keyframes slideInMessage {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
-        .footer button:hover {
-            color: #FFD700;
-        }
-        .footer button.active {
-            color: #FF69B4;
-        }
-        .footer img {
-            width: 24px;
-            height: 24px;
-            margin-bottom: 5px;
-        }
-        .bond-quote {
-            position: fixed;
-            bottom: 70px;
-            left: 20px;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 10px;
-            border-radius: 5px;
-            font-style: italic;
-            font-size: 12px;
+        .loading {
+            border: 5px solid rgba(26, 42, 68, 0.9);
+            border-top: 5px solid #00ffcc;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            animation: orbitSpin 1.5s linear infinite;
+            margin: 15px auto;
             display: none;
+        }
+        @keyframes orbitSpin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+        .notification {
+            background: #00ff99;
+            color: #0a1322;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            animation: popUp 0.5s ease-out;
+            display: none;
+        }
+        @keyframes popUp {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .map {
+            width: 100%;
+            height: 200px;
+            background: rgba(26, 42, 68, 0.7);
+            border: 2px solid #00ffcc;
+            border-radius: 10px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+            animation: mapPulse 2s infinite;
+        }
+        @keyframes mapPulse {
+            0% { box-shadow: 0 0 10px #00ffcc; }
+            50% { box-shadow: 0 0 20px #00ff99; }
+            100% { box-shadow: 0 0 10px #00ffcc; }
+        }
+        .map-dot {
+            width: 10px;
+            height: 10px;
+            background: #00ff99;
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 0 0 5px #00ff99;
+            animation: orbitPath 5s infinite;
+        }
+        @keyframes orbitPath {
+            0% { left: 10%; top: 10%; }
+            25% { left: 80%; top: 20%; }
+            50% { left: 20%; top: 80%; }
+            75% { left: 70%; top: 40%; }
+            100% { left: 10%; top: 10%; }
+        }
+        .chat-input {
+            width: 70%;
+            padding: 10px;
+            margin: 10px 5px 10px 0;
+            background: rgba(26, 42, 68, 0.7);
+            border: 2px solid #00ffcc;
+            border-radius: 5px;
+            color: #e0f0ff;
+            transition: all 0.3s ease;
+        }
+        .chat-input:focus {
+            border-color: #00ff99;
+            box-shadow: 0 0 10px #00ff99;
+        }
+        .send-button {
+            background: #00ffcc;
+            color: #0a1322;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .send-button:hover {
+            background: #00ff99;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px #00ff99;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        СЕКРЕТНЫЙ АГЕНТ
-        <span>КОД 007</span>
-    </div>
-    <div class="nav">
-        <button class="active">СОЮЗНИКИ</button>
-        <button>ТРЕЙДИНГ</button>
-    </div>
-    <div class="content">
-        <div class="team-member">
-            <img src="https://via.placeholder.com/40/FFD700/2A0033?text=007" alt="Agent 007">
-            <div>
-                <strong>AI_Bond_Bot</strong>
-                <p>0 💎 (Martini: Shaken, not stirred)</p>
+    <div class="container">
+        <div class="header">
+            <span class="agent">ShadowPulse</span>
+            <span class="logo">ShadowPulse Bot</span>
+        </div>
+        <div class="content">
+            <div class="buttons">
+                <div class="button" onclick="showStats()">📊 Миссия</div>
+                <div class="button" onclick="showSignals()">📡 Сигналы</div>
+                <div class="button" onclick="showTrades()">📈 Операции</div>
+                <div class="button" onclick="showMap()">🗺️ Карта</div>
+                <div class="button" onclick="showChat()">💬 Связь</div>
+                <div class="button" onclick="showSettings()">⚙️ Настройки</div>
+            </div>
+            <div id="statsSection" class="section" style="display: none;">
+                <h3>Миссия: Статус</h3>
+                <div class="stats-list" id="statsList">
+                    <div class="stat-item">Активные цели: <span id="activeGoals">0</span></div>
+                    <div class="stat-item">Успех: <span id="successRate">0%</span></div>
+                    <div class="stat-item">Время: <span id="currentTime">06:07 PM CEST, 23 May 2025</span></div>
+                </div>
+                <div class="notification" id="missionNotification">Новая миссия активирована!</div>
+            </div>
+            <div id="signalsSection" class="section" style="display: none;">
+                <h3>Сигналы</h3>
+                <div class="signals-list" id="signalsList">
+                    <div class="signal-item">BTCUSDT: Ликвидации $600K</div>
+                </div>
+                <div class="loading" id="signalsLoading"></div>
+            </div>
+            <div id="tradesSection" class="section" style="display: none;">
+                <h3>Операции</h3>
+                <div class="trades-list" id="tradesList">
+                    <div class="trade-item">BTCUSDT: Лонг +3.2%</div>
+                </div>
+            </div>
+            <div id="mapSection" class="section" style="display: none;">
+                <h3>Карта миссий</h3>
+                <div class="map">
+                    <div class="map-dot" style="animation-delay: 0s;"></div>
+                    <div class="map-dot" style="animation-delay: 1s;"></div>
+                    <div class="map-dot" style="animation-delay: 2s;"></div>
+                </div>
+            </div>
+            <div id="chatSection" class="section" style="display: none;">
+                <h3>Шпионская связь</h3>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-message">ShadowPulse: Агент, связь установлена.</div>
+                </div>
+                <input type="text" id="chatInput" class="chat-input" placeholder="Сообщение...">
+                <button class="send-button" onclick="sendMessage()">Отправить</button>
+            </div>
+            <div id="settingsSection" class="section" style="display: none;">
+                <h3>Настройки</h3>
+                <div class="stats-list">
+                    <div class="stat-item">Риск: <span>1%</span></div>
+                    <div class="stat-item">Макс. сделок: <span>5</span></div>
+                </div>
             </div>
         </div>
-        <div class="referral">
-            <p>ПОИСК ПО АГЕНТСКОМУ КОДУ</p>
-            <p>Союзники: 0</p>
-            <div class="mission" onclick="playMissionSound()">НОВАЯ МИССИЯ: ВЗЛОМАТЬ Q</div>
-        </div>
-        <div class="wallet-section">
-            <img src="https://via.placeholder.com/40/FFD700/2A0033?text=Wallet" alt="Wallet">
-            <div>
-                <p>Подключённый кошелёк: Не подключен</p>
-                <div class="connect-wallet" onclick="showWalletForm()">Подключить кошелёк</div>
-            </div>
-        </div>
-        <div class="wallet-form" id="walletForm" style="display: none;">
-            <p>Введите адрес кошелька или подключите MetaMask:</p>
-            <input type="text" id="walletAddress" placeholder="0x...">
-            <div class="connect-wallet" onclick="connectWallet()">Подтвердить</div>
-        </div>
-        <div class="trade-signal" id="tradeSignal" style="display: none;">
-            <p>Сигнал: LONG $KAS (Binance)</p>
-            <p>Объём: +515%, OI: +4.8%, Ликвидации: $380k</p>
-            <p>Вероятность (ML): 75%</p>
-            <div class="connect-wallet" onclick="executeTrade()">Выполнить сделку</div>
-        </div>
-    </div>
-    <div class="footer">
-        <button class="active">
-            <img src="https://via.placeholder.com/24/FFD700/2A0033?text=Map" alt="Casino Royale Map">
-            <span>Лока</span>
-        </button>
-        <button>
-            <img src="https://via.placeholder.com/24/FFD700/2A0033?text=Car" alt="Aston Martin">
-            <span>Кошелек</span>
-        </button>
-        <button>
-            <img src="https://via.placeholder.com/24/FFD700/2A0033?text=Gun" alt="Walther PPK">
-            <span>Команда</span>
-        </button>
-        <button>
-            <img src="https://via.placeholder.com/24/FFD700/2A0033?text=Mission" alt="Mission Icon">
-            <span>Задания</span>
-        </button>
-        <button>
-            <img src="https://via.placeholder.com/24/FFD700/2A0033?text=Stats" alt="MI6 Reports">
-            <span>Статистика</span>
-        </button>
-    </div>
-    <div class="bond-quote" id="bondQuote">
-        "Имя — Бонд. Джеймс Бонд."
     </div>
 
     <script>
-        // Эмуляция Telegram Web App API, если он недоступен
-        let tg = window.Telegram?.WebApp;
-        let startParam = 'default';
-
-        if (!tg) {
-            console.warn('Telegram WebApp API не доступен. Используем эмуляцию.');
-            tg = {
-                ready: () => console.log('Emulated ready'),
-                initDataUnsafe: { start_param: 'emulated_param' },
-                sendData: (data) => {
-                    console.log('Emulated sendData:', data);
-                    return true;
-                }
-            };
-            startParam = tg.initDataUnsafe.start_param;
-        } else {
-            tg.ready();
-            startParam = tg.initDataUnsafe?.start_param || 'default';
-            console.log('Telegram WebApp initialized, start_param:', startParam);
+        // Показ/скрытие секций
+        function hideAllSections() {
+            document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
         }
 
-        // Функция для проигрывания звука миссии
-        function playMissionSound() {
-            const audio = new Audio('https://www.soundboard.com/sb/james_bond_theme');
-            audio.play().catch(() => console.log("Звук не поддерживается в этом окружении"));
-            showBondQuote();
+        function showStats() {
+            hideAllSections();
+            document.getElementById('statsSection').style.display = 'block';
+            updateStats();
+            showNotification('Миссия активирована!');
         }
 
-        // Функция для показа цитаты Бонда
-        function showBondQuote() {
-            const quotes = [
-                "Имя — Бонд. Джеймс Бонд.",
-                "Martini. Взболтать, но не смешивать.",
-                "У меня есть лицензия на убийство... и на торговлю!",
-                "Q, мне нужен гаджет для этой миссии!"
-            ];
-            const quoteElement = document.getElementById('bondQuote');
-            quoteElement.textContent = quotes[Math.floor(Math.random() * quotes.length)];
-            quoteElement.style.display = 'block';
-            setTimeout(() => {
-                quoteElement.style.display = 'none';
-            }, 3000);
+        function showSignals() {
+            hideAllSections();
+            document.getElementById('signalsSection').style.display = 'block';
+            updateSignals();
+            document.getElementById('signalsLoading').style.display = 'block';
+            setTimeout(() => document.getElementById('signalsLoading').style.display = 'none', 1500);
         }
 
-        // Показать форму подключения кошелька
-        function showWalletForm() {
-            document.getElementById('walletForm').style.display = 'block';
+        function showTrades() {
+            hideAllSections();
+            document.getElementById('tradesSection').style.display = 'block';
+            updateTrades();
         }
 
-        // Подключение кошелька
-        function connectWallet() {
-            const walletAddress = document.getElementById('walletAddress').value;
-            if (walletAddress && /^0x[a-fA-F0-9]{40}$/.test(walletAddress)) {
-                document.querySelector('.wallet-section p').textContent = `Подключённый кошелёк: ${walletAddress}`;
-                document.getElementById('walletForm').style.display = 'none';
-                alert('Кошелёк успешно подключен! Баланс будет обновлён через API.');
-                tg.sendData(JSON.stringify({ action: 'wallet_connect', address: walletAddress, startParam }));
-                // Здесь можно отправить адрес на сервер
-                fetch('/api/connect-wallet', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ address: walletAddress, startParam })
-                }).catch(err => console.error('Ошибка подключения:', err));
-            } else {
-                alert('Неверный формат адреса кошелька!');
+        function showMap() {
+            hideAllSections();
+            document.getElementById('mapSection').style.display = 'block';
+        }
+
+        function showChat() {
+            hideAllSections();
+            document.getElementById('chatSection').style.display = 'block';
+            updateChat();
+        }
+
+        function showSettings() {
+            hideAllSections();
+            document.getElementById('settingsSection').style.display = 'block';
+        }
+
+        // Обновление данных
+        let activeGoals = 0;
+        let successRate = 0;
+        let trades = ['BTCUSDT: Лонг +3.2%'];
+        let signals = ['BTCUSDT: Ликвидации $600K'];
+        let chatHistory = ['ShadowPulse: Агент, связь установлена.'];
+
+        function updateStats() {
+            document.getElementById('activeGoals').innerText = activeGoals;
+            document.getElementById('successRate').innerText = successRate + '%';
+            document.getElementById('currentTime').innerText = new Date().toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'CET', day: 'numeric', month: 'long', year: 'numeric' });
+        }
+
+        function updateSignals() {
+            const signalsList = document.getElementById('signalsList');
+            signalsList.innerHTML = signals.map(s => `<div class="signal-item">${s}</div>`).join('');
+        }
+
+        function updateTrades() {
+            const tradesList = document.getElementById('tradesList');
+            tradesList.innerHTML = trades.map(t => `<div class="trade-item">${t}</div>`).join('');
+        }
+
+        function updateChat() {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = chatHistory.map(m => `<div class="chat-message">${m}</div>`).join('');
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (message) {
+                chatHistory.push(`Агент: ${message}`);
+                input.value = '';
+                updateChat();
+                setTimeout(() => {
+                    chatHistory.push(`ShadowPulse: Сообщение получено. Код: ${Math.random().toString(36).substr(2, 5)}`);
+                    updateChat();
+                }, 1000);
             }
         }
 
-        // Симуляция торгового сигнала
-        function checkTradeSignal() {
-            const mockSignal = {
-                ticker: 'KAS',
-                exchange: 'Binance',
-                volumeIncrease: 515,
-                oiIncrease: 4.8,
-                liquidations: 380000,
-                mlProbability: 75
-            };
-            if (mockSignal.volumeIncrease > 300 && mockSignal.oiIncrease > 2.5 && mockSignal.liquidations > 200000 && mockSignal.mlProbability >= 70) {
-                document.getElementById('tradeSignal').style.display = 'block';
-                document.getElementById('tradeSignal').innerHTML = `
-                    <p>Сигнал: LONG $${mockSignal.ticker} (${mockSignal.exchange})</p>
-                    <p>Объём: +${mockSignal.volumeIncrease}%, OI: +${mockSignal.oiIncrease}%, Ликвидации: $${mockSignal.liquidations}k</p>
-                    <p>Вероятность (ML): ${mockSignal.mlProbability}%</p>
-                    <div class="connect-wallet" onclick="executeTrade()">Выполнить сделку</div>
-                `;
-            }
-        }
-        setInterval(checkTradeSignal, 60000);
-
-        // Выполнение сделки (симуляция)
-        function executeTrade() {
-            const walletAddress = document.querySelector('.wallet-section p').textContent.split(': ')[1];
-            if (walletAddress !== 'Не подключен') {
-                alert('Сделка выполнена! LONG $KAS открыт. (Симуляция)');
-                tg.sendData(JSON.stringify({ action: 'trade', wallet: walletAddress, startParam }));
-            } else {
-                alert('Подключите кошелёк для выполнения сделки!');
-            }
+        function showNotification(message) {
+            const notification = document.getElementById('missionNotification');
+            notification.style.display = 'block';
+            notification.innerText = message;
+            setTimeout(() => notification.style.display = 'none', 3000);
         }
 
-        // Переключение вкладок в навигации
-        document.querySelectorAll('.nav button').forEach(button => {
-            button.addEventListener('click', () => {
-                document.querySelector('.nav button.active').classList.remove('active');
-                button.classList.add('active');
-                if (button.textContent === 'СОЮЗНИКИ') {
-                    document.querySelector('.content').innerHTML = `
-                        <div class="team-member">
-                            <img src="https://via.placeholder.com/40/FFD700/2A0033?text=007" alt="Agent 007">
-                            <div>
-                                <strong>AI_Bond_Bot</strong>
-                                <p>0 💎 (Martini: Shaken, not stirred)</p>
-                            </div>
-                        </div>
-                        <div class="referral">
-                            <p>ПОИСК ПО АГЕНТСКОМУ КОДУ</p>
-                            <p>Союзники: 0</p>
-                            <div class="mission" onclick="playMissionSound()">НОВАЯ МИССИЯ: ВЗЛОМАТЬ Q</div>
-                        </div>
-                        <div class="wallet-section">
-                            <img src="https://via.placeholder.com/40/FFD700/2A0033?text=Wallet" alt="Wallet">
-                            <div>
-                                <p>Подключённый кошелёк: Не подключен</p>
-                                <div class="connect-wallet" onclick="showWalletForm()">Подключить кошелёк</div>
-                            </div>
-                        </div>
-                        <div class="wallet-form" id="walletForm" style="display: none;">
-                            <p>Введите адрес кошелька или подключите MetaMask:</p>
-                            <input type="text" id="walletAddress" placeholder="0x...">
-                            <div class="connect-wallet" onclick="connectWallet()">Подтвердить</div>
-                        </div>
-                    `;
-                } else if (button.textContent === 'ТРЕЙДИНГ') {
-                    document.querySelector('.content').innerHTML = `
-                        <div class="trade-signal" id="tradeSignal" style="display: none;">
-                            <p>Сигнал: Ожидание...</p>
-                        </div>
-                        <div class="wallet-section">
-                            <img src="https://via.placeholder.com/40/FFD700/2A0033?text=Wallet" alt="Wallet">
-                            <div>
-                                <p>Подключённый кошелёк: Не подключен</p>
-                                <div class="connect-wallet" onclick="showWalletForm()">Подключить кошелёк</div>
-                            </div>
-                        </div>
-                        <div class="wallet-form" id="walletForm" style="display: none;">
-                            <p>Введите адрес кошелька или подключите MetaMask:</p>
-                            <input type="text" id="walletAddress" placeholder="0x...">
-                            <div class="connect-wallet" onclick="connectWallet()">Подтвердить</div>
-                        </div>
-                    `;
-                    checkTradeSignal();
-                }
-            });
-        });
-
-        // Переключение разделов в футере
-        document.querySelectorAll('.footer button').forEach(button => {
-            button.addEventListener('click', () => {
-                document.querySelector('.footer button.active').classList.remove('active');
-                button.classList.add('active');
-                const section = button.textContent;
-                let content = '';
-                if (section === 'Команда') {
-                    content = `
-                        <div class="team-member">
-                            <img src="https://via.placeholder.com/40/FFD700/2A0033?text=007" alt="Agent 007">
-                            <div>
-                                <strong>AI_Bond_Bot</strong>
-                                <p>0 💎 (Martini: Shaken, not stirred)</p>
-                            </div>
-                        </div>
-                        <div class="referral">
-                            <p>ПОИСК ПО АГЕНТСКОМУ КОДУ</p>
-                            <p>Союзники: 0</p>
-                            <div class="mission" onclick="playMissionSound()">НОВАЯ МИССИЯ: ВЗЛОМАТЬ Q</div>
-                        </div>
-                        <div class="wallet-section">
-                            <img src="https://via.placeholder.com/40/FFD700/2A0033?text=Wallet" alt="Wallet">
-                            <div>
-                                <p>Подключённый кошелёк: Не подключен</p>
-                                <div class="connect-wallet" onclick="showWalletForm()">Подключить кошелёк</div>
-                            </div>
-                        </div>
-                        <div class="wallet-form" id="walletForm" style="display: none;">
-                            <p>Введите адрес кошелька или подключите MetaMask:</p>
-                            <input type="text" id="walletAddress" placeholder="0x...">
-                            <div class="connect-wallet" onclick="connectWallet()">Подтвердить</div>
-                        </div>
-                    `;
-                } else if (section === 'Кошелек') {
-                    content = `
-                        <div class="wallet-section">
-                            <img src="https://via.placeholder.com/40/FFD700/2A0033?text=Wallet" alt="Wallet">
-                            <div>
-                                <p>Подключённый кошелёк: Не подключен</p>
-                                <div class="connect-wallet" onclick="showWalletForm()">Подключить кошелёк</div>
-                            </div>
-                        </div>
-                        <div class="wallet-form" id="walletForm" style="display: none;">
-                            <p>Введите адрес кошелька или подключите MetaMask:</p>
-                            <input type="text" id="walletAddress" placeholder="0x...">
-                            <div class="connect-wallet" onclick="connectWallet()">Подтвердить</div>
-                        </div>
-                        <p>Баланс: 0 ETH (Aston Martin на ремонте)</p>
-                    `;
-                } else if (section === 'Задания') {
-                    content = `<p>Миссия: Проникнуть в логово SPECTRE</p>`;
-                } else if (section === 'Статистика') {
-                    content = `<p>Отчеты агента: 0 успешных миссий</p>`;
-                } else if (section === 'Лока') {
-                    content = `<p>Карта миссий: Казино Рояль</p>`;
-                }
-                document.querySelector('.content').innerHTML = content;
-            });
-        });
-
-        // Пример простой логики рефералов
-        function updateReferrals() {
-            const referralCount = 0;
-            const referralElement = document.querySelector('.referral p:last-child');
-            if (referralElement) {
-                referralElement.textContent = `Союзники: ${referralCount}`;
-            }
-        }
-        updateReferrals();
+        // Инициализация
+        updateStats();
+        setInterval(updateStats, 1000); // Обновление времени каждую секунду
+        setInterval(() => {
+            activeGoals = Math.min(activeGoals + 1, 5);
+            successRate = Math.min(successRate + 10, 100);
+            updateStats();
+            if (activeGoals === 5) showNotification('Миссия завершена!');
+        }, 5000); // Имитация прогресса миссии каждые 5 секунд
     </script>
+</body>
+</html>
 </body>
 </html>
